@@ -1,0 +1,18 @@
+Technical Interview Assignment
+
+- build one page form that takes url and returns shortened url
+
+- backend endpoints,
+	one that takes long url and shortens it before returning result
+	second sends request url and response url to db for storage (check if url already exists)
+	third takes request url, checks if it's already shortened, and fetches long link from db, then does redirect
+	
+	set up database to store long and short url. use short url as key
+	
+	
+* git ssh setup
+
+//ssh-keygen -t ed25519 -C "youremail@gmail.com"
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519
+
