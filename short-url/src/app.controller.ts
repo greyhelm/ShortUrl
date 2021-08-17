@@ -5,11 +5,6 @@ import { AppService } from './app.service';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  /*@Post()
-  handleUrl(): string {
-    return ''; //this.appService.handledUrl();
-  }*/
-
   @Get()
   @Render('index')
   getHello() {

@@ -1,15 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ShortUrlController } from './short-url.controller';
+import { ShorturlController } from './shorturl.controller';
 
 describe('ShortUrlController', () => {
-  let controller: ShortUrlController;
+  let controller: ShorturlController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [ShortUrlController],
+      controllers: [ShorturlController],
     }).compile();
 
-    controller = module.get<ShortUrlController>(ShortUrlController);
+    controller = module.get<ShorturlController>(ShorturlController);
   });
 
   it('should be defined', () => {
