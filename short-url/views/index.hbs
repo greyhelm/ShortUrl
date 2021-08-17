@@ -30,8 +30,6 @@
       <div class="row">
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
               <form action="/shorturl" method="post" role="form" enctype="application/x-www-form-urlencoded">
-                  <legend>Enter Registration Information Here</legend>
-
                   <div class="form-group">
                       <label for="url">Enter Url</label>
                       <input type="text" class="form-control" name="url" id="url" placeholder="Enter Url">
@@ -39,6 +37,18 @@
 
                   <button type="submit" class="btn btn-primary">Submit</button>
               </form>
+          </div>
+
+          <div>
+              <form action="/redirect" method="post" role="form" enctype="application/x-www-form-urlencoded">
+                  <div class="form-group">
+                      <label for="url">Enter Shorted Url</label>
+                      <input type="text" class="form-control" name="url" id="url" placeholder="Enter Shortened Url">
+                  </div>
+
+                  <button type="submit" class="btn btn-primary">Submit</button>
+             </form>
+
           </div>
       </div>
   </div>

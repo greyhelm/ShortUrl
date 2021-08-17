@@ -16,3 +16,7 @@ Technical Interview Assignment
 eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_ed25519
 
+MongoDB
+
+mongodb+srv://brian:<password>@cluster0.giyea.mongodb.net/test
+

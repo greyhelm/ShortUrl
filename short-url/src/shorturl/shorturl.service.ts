@@ -15,6 +15,7 @@ export class ShorturlService {
   // fetch long url with short url from mock data
   getUrl(shortUrl): Promise<any> {
     const url = String(shortUrl);
+    console.log(url);
     return new Promise((resolve) => {
       const longUrl = this.urls.find((longUrl) => longUrl.shortUrl === url);
 
@@ -34,6 +35,7 @@ export class ShorturlService {
     };
 
     const newUrls = shortenUrl(newUrlObj);
+    console.log(newUrls.originalUrl);
 
     return new Promise((resolve) => {
       this.urls.push(newUrls);
