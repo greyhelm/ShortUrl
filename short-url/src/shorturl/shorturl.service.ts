@@ -44,7 +44,7 @@ export class ShorturlService {
     function shortenUrl(urlObj) {
       //do shortening algorithm
       return {
-        originalUrl: urlObj.originalUrl,
+        originalUrl: urlObj.originalUrl.url,
         shortUrl: 'shorter URL!',
       };
     }
