@@ -20,15 +20,27 @@ export class ShortUrlService {
     });
   }
 
+  // fetch long url with short url from database
+  getUrl(url): Promise<Url[]> {
+    console.log('fetch shortUrl for: ' + url);
+    return new Promise((resolve) => {
+      const url = this.urlModel.find({ shortUrl: url }).exec();
+      url.linkUsage += 1;
+      const updatedUrl = new CreateURLDto(url);
+      const updateUrl = new this.urlModel(updatedUrl).save;
+      resolve(url);
+    });
+  }
+
   async addUrl(createUrlDto: CreateURLDto): Promise<Url> {
     const newUrl = new this.urlModel(createUrlDto);
     return newUrl.save();
   }
 
   // fetch long url with short url from mock data
-  getUrl(shortUrl): Promise<any> {
+  getUrlasd(shortUrl): Promise<any> {
     const url = String(shortUrl);
-    console.log(url);
+    console.log('fetch shortUrl: ' + url);
     return new Promise((resolve) => {
       const longUrl = this.urls.find((longUrl) => longUrl.shortUrl === url);
 

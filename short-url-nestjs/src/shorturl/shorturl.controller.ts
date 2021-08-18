@@ -1,4 +1,4 @@
-import {Controller, Get, Param, Post, Body, Delete, Query, Redirect, Res} from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Delete, Query, Redirect, Res } from '@nestjs/common';
 import { ShortUrlService } from './shorturl.service';
 import { CreateURLDto } from './shorturl.dto';
 import { Url } from '../schemas/url.schema';
@@ -13,10 +13,16 @@ export class ShortUrlController {
     return this.shortUrlService.getUrls();
   }
 
+  @Redirect('/')
   @Get(':shortUrl')
   async getUrl(@Param('shortUrl') shortUrl, @Res() res) {
     const url = await this.shortUrlService.getUrl(shortUrl);
-    res.redirect(url.originalUrl);
+    if (url == null) {
+      console.log('Url not Found!');
+      return res.sendStatus(404);
+    }
+    console.log('found original url for '+ url[0].shortUrl +': ' + url[0].originalUrl);
+    return { url: url[0].originalUrl }
   }
 
   @Post()
@@ -39,9 +45,11 @@ export class ShortUrlController {
 export class RedirectController {
   constructor(private shortUrlService: ShortUrlService) {}
 
-  @Post()
-  async redirect(@Body() createUrlDto: CreateURLDto) {
-    const url = await this.shortUrlService.addUrl(createUrlDto);
-    return url;
+  @Get()
+  async getUrl(@Body('shortUrl') shortUrl, @Res() res) {
+    const url = await this.shortUrlService.getUrl(shortUrl);
+    console.log(url.length);
+    console.log(JSON.parse(url[1].toString()));
+    window.location.href = url[0].originalUrl; //res.redirect(url[0].originalUrl);
   }
 }
