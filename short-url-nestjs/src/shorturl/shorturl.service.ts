@@ -1,15 +1,28 @@
 import { HttpException, Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { CreateURLDto } from './shorturl.dto';
+import { Url, UrlDocument } from '../schemas/url.schema';
 import { URLS } from './url.mock';
 
 @Injectable()
-export class ShorturlService {
+export class ShortUrlService {
+  constructor(
+    @InjectModel(Url.name) private readonly urlModel: Model<UrlDocument>,
+  ) {}
+
   urls = URLS;
 
-  // return all mock data
-  getUrls(): Promise<any> {
+  // return all data
+  async getUrls(): Promise<Url[]> {
     return new Promise((resolve) => {
-      resolve(this.urls);
+      resolve(this.urlModel.find().exec());
     });
+  }
+
+  async addUrl(createUrlDto: CreateURLDto): Promise<Url> {
+    const newUrl = new this.urlModel(createUrlDto);
+    return newUrl.save();
   }
 
   // fetch long url with short url from mock data
@@ -28,22 +41,21 @@ export class ShorturlService {
   }
 
   // adds new url to mock data
-  addUrl(newUrl): Promise<any> {
+  addNewUrl(newUrl): Promise<any> {
     console.log(newUrl);
     const isShortUrl = !newUrl.url ? true : false;
     console.log(isShortUrl);
     newUrl = isShortUrl ? newUrl.shorturl : newUrl.url;
     console.log(newUrl);
 
-    let newUrlObj = {
+    const newUrlObj = {
       originalUrl: '',
       shortUrl: '',
     };
 
-    if(isShortUrl){
+    if (isShortUrl) {
       newUrlObj.shortUrl = newUrl;
-    }
-    else{
+    } else {
       newUrlObj.originalUrl = newUrl;
     }
 
@@ -79,6 +91,4 @@ export class ShorturlService {
       resolve(this.urls);
     });
   }
-
-
 }

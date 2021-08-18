@@ -1,18 +1,16 @@
 import {Controller, Get, Param, Post, Body, Delete, Query, Redirect, Res} from '@nestjs/common';
-import { ShorturlService } from './shorturl.service';
+import { ShortUrlService } from './shorturl.service';
 import { CreateURLDto } from './shorturl.dto';
-import {ShorturlModule} from "./shorturl.module";
-import { Response } from '@nestjs/common';
+import { Url } from '../schemas/url.schema';
 
 @Controller('shorturl')
-export class ShorturlController {
-  constructor(private shortUrlService: ShorturlService) {}
+export class ShortUrlController {
+  constructor(private shortUrlService: ShortUrlService) {}
 
   @Get()
   async getUrls() {
-    console.log('all');
-    const urls = await this.shortUrlService.getUrls();
-    return urls;
+    console.log('get all data');
+    return this.shortUrlService.getUrls();
   }
 
   @Get(':shortUrl')
@@ -22,14 +20,28 @@ export class ShorturlController {
   }
 
   @Post()
-  async addUrl(@Body() createUrlDto: CreateURLDto) {
+  async addUrl(@Body() createUrlDto: CreateURLDto, @Res() res) {
+    console.log('adding url');
     const url = await this.shortUrlService.addUrl(createUrlDto);
+    console.log('addUrl finished');
+    res.redirect('/');
     return url;
   }
 
   @Delete()
   async removeUrl(@Query() query) {
     const url = await this.shortUrlService.removeUrl(query.url);
+    return url;
+  }
+}
+
+@Controller('redirect')
+export class RedirectController {
+  constructor(private shortUrlService: ShortUrlService) {}
+
+  @Post()
+  async redirect(@Body() createUrlDto: CreateURLDto) {
+    const url = await this.shortUrlService.addUrl(createUrlDto);
     return url;
   }
 }

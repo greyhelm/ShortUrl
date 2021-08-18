@@ -17,6 +17,10 @@ eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_ed25519
 
 MongoDB
+//mongodb+srv://brian:<rtRDtWVwMUNC1lEQ>@cluster0.giyea.mongodb.net/test
 
-mongodb+srv://brian:<password>@cluster0.giyea.mongodb.net/test
+run locally, ../mongod.exe
+then run npm run start:dev in nest project
+
+
 
