@@ -1,0 +1,20 @@
+{
+  "name": "short-url-express",
+  "version": "1.0.0",
+  "description": "Url Shortener",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon server.js"
+  },
+  "author": "Brian Sylvester",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "mongoose": "^5.13.7",
+    "nanoid": "^3.1.25"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
+}
