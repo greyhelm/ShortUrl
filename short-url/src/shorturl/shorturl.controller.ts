@@ -1,6 +1,8 @@
-import { Controller, Get, Param, Post, Body, Delete, Query } from '@nestjs/common';
+import {Controller, Get, Param, Post, Body, Delete, Query, Redirect, Res} from '@nestjs/common';
 import { ShorturlService } from './shorturl.service';
 import { CreateURLDto } from './shorturl.dto';
+import {ShorturlModule} from "./shorturl.module";
+import { Response } from '@nestjs/common';
 
 @Controller('shorturl')
 export class ShorturlController {
@@ -8,14 +10,15 @@ export class ShorturlController {
 
   @Get()
   async getUrls() {
+    console.log('all');
     const urls = await this.shortUrlService.getUrls();
     return urls;
   }
 
   @Get(':shortUrl')
-  async getUrl(@Param('shortUrl') shortUrl) {
+  async getUrl(@Param('shortUrl') shortUrl, @Res() res) {
     const url = await this.shortUrlService.getUrl(shortUrl);
-    return url;
+    res.redirect(url.originalUrl);
   }
 
   @Post()
