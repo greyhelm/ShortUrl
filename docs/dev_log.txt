@@ -9,15 +9,23 @@ Technical Interview Assignment
 	
 	set up database to store long and short url. use short url as key
 	
+	schema - {
+		originalUrl
+		shortUrl
+		linkUsage (clicks)
+		timestamp
+		ip location of request?
+	}
+	
+- 
+	
 	
 * git ssh setup
 
-//ssh-keygen -t ed25519 -C "youremail@gmail.com"
 eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_ed25519
 
 MongoDB
-
 
 run locally, ../mongod.exe
 then run npm run start:dev in nest project

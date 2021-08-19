@@ -3,15 +3,12 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateURLDto } from './shorturl.dto';
 import { Url, UrlDocument } from '../schemas/url.schema';
-import { URLS } from './url.mock';
 
 @Injectable()
 export class ShortUrlService {
   constructor(
     @InjectModel(Url.name) private readonly urlModel: Model<UrlDocument>,
   ) {}
-
-  urls = URLS;
 
   // return all data
   async getUrls(): Promise<Url[]> {
@@ -21,72 +18,25 @@ export class ShortUrlService {
   }
 
   // fetch long url with short url from database
-  getUrl(url): Promise<Url[]> {
+  async getUrl(url): Promise<Url[]> {
     console.log('fetch shortUrl for: ' + url);
-    return new Promise((resolve) => {
-      const url = this.urlModel.find({ shortUrl: url }).exec();
-      url.linkUsage += 1;
-      const updatedUrl = new CreateURLDto(url);
-      const updateUrl = new this.urlModel(updatedUrl).save;
-      resolve(url);
+    const result = await new Promise((resolve) => {
+      resolve(this.urlModel.find({ shortUrl: url }).exec());
     });
+
+    console.log('object fetched: ' + result);
+
+    // increment link usage
+    result[0].linkUsage += 1;
+    const resultModel = new this.urlModel(result[0]);
+    await resultModel.save();
+
+    return result as Url[];
   }
 
   async addUrl(createUrlDto: CreateURLDto): Promise<Url> {
     const newUrl = new this.urlModel(createUrlDto);
     return newUrl.save();
-  }
-
-  // fetch long url with short url from mock data
-  getUrlasd(shortUrl): Promise<any> {
-    const url = String(shortUrl);
-    console.log('fetch shortUrl: ' + url);
-    return new Promise((resolve) => {
-      const longUrl = this.urls.find((longUrl) => longUrl.shortUrl === url);
-
-      if (!longUrl) {
-        throw new HttpException('Url does not exist', 404);
-      }
-
-      resolve(longUrl);
-    });
-  }
-
-  // adds new url to mock data
-  addNewUrl(newUrl): Promise<any> {
-    console.log(newUrl);
-    const isShortUrl = !newUrl.url ? true : false;
-    console.log(isShortUrl);
-    newUrl = isShortUrl ? newUrl.shorturl : newUrl.url;
-    console.log(newUrl);
-
-    const newUrlObj = {
-      originalUrl: '',
-      shortUrl: '',
-    };
-
-    if (isShortUrl) {
-      newUrlObj.shortUrl = newUrl;
-    } else {
-      newUrlObj.originalUrl = newUrl;
-    }
-
-    const newUrls = shortenUrl(newUrlObj);
-    console.log(newUrls.originalUrl);
-
-    return new Promise((resolve) => {
-      this.urls.push(newUrls);
-      resolve(this.urls);
-    });
-
-    // shortening the URL
-    function shortenUrl(urlObj) {
-      //do shortening algorithm
-      return {
-        originalUrl: urlObj.originalUrl,
-        shortUrl: 'shorter URL!',
-      };
-    }
   }
 
   removeUrl(urlToRemove): Promise<any> {
