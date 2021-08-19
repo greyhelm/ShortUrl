@@ -40,16 +40,3 @@ export class ShortUrlController {
     return url;
   }
 }
-
-@Controller('redirect')
-export class RedirectController {
-  constructor(private shortUrlService: ShortUrlService) {}
-
-  @Get()
-  async getUrl(@Body('shortUrl') shortUrl, @Res() res) {
-    const url = await this.shortUrlService.getUrl(shortUrl);
-    console.log(url.length);
-    console.log(JSON.parse(url[1].toString()));
-    window.location.href = url[0].originalUrl; //res.redirect(url[0].originalUrl);
-  }
-}

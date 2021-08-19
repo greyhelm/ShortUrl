@@ -39,18 +39,8 @@ export class ShortUrlService {
     return newUrl.save();
   }
 
-  removeUrl(urlToRemove): Promise<any> {
-    const url = String(urlToRemove);
-    return new Promise((resolve) => {
-      const index = this.urls.findIndex(
-        (url) => url.originalUrl === urlToRemove,
-      );
-
-      if (index === -1) {
-        throw new HttpException('Url does not exist', 404);
-      }
-      this.urls.splice(index, 1);
-      resolve(this.urls);
-    });
+  async removeUrl(url): Promise<void> {
+    const result = await this.urlModel.find({ shortUrl: url }).exec();
+    await result[0].deleteOne();
   }
 }
