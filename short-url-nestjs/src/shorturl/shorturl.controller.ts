@@ -9,13 +9,13 @@ export class ShortUrlController {
   @Get()
   @Render('index')
   async getUrls() {
-    console.log('get all data');
+    //console.log('get all data');
     const shortUrls = await this.shortUrlService.getUrls();
-    console.log(shortUrls);
+    //console.log(shortUrls);
     return { shortUrls };
   }
 
-  @Redirect('/')
+  @Redirect('/shorturl')
   @Get(':shortUrl')
   async getUrl(@Param('shortUrl') shortUrl, @Res() res) {
     const url = await this.shortUrlService.getUrl(shortUrl);
@@ -23,16 +23,16 @@ export class ShortUrlController {
       console.log('Url not Found!');
       return res.sendStatus(404);
     }
-    console.log('found original url for '+ url[0].shortUrl +': ' + url[0].originalUrl);
+    //console.log('found original url for '+ url[0].shortUrl +': ' + url[0].originalUrl);
     return { url: url[0].originalUrl }
   }
 
   @Post()
   async addUrl(@Body() createUrlDto: CreateURLDto, @Res() res) {
-    console.log('adding url');
+    //console.log('adding url');
     const url = await this.shortUrlService.addUrl(createUrlDto);
-    console.log('addUrl finished');
-    res.redirect('/');
+    //console.log('addUrl finished');
+    res.redirect('/shorturl');
     return url;
   }
 

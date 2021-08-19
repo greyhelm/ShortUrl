@@ -1,4 +1,4 @@
-import { Controller, Render, Get } from '@nestjs/common';
+import {Controller, Render, Get, Redirect} from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller()
@@ -6,9 +6,9 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  @Render('index')
+  @Redirect('/shorturl')
   getHello() {
-    const message = this.appService.getHello();
-    return { message };
+    //const message = this.appService.getHello();
+    return {};
   }
 }
