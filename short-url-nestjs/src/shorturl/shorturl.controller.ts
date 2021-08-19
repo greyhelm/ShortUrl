@@ -1,16 +1,18 @@
-import { Controller, Get, Param, Post, Body, Delete, Query, Redirect, Res } from '@nestjs/common';
+import {Controller, Get, Param, Post, Body, Delete, Query, Redirect, Res, Render} from '@nestjs/common';
 import { ShortUrlService } from './shorturl.service';
 import { CreateURLDto } from './shorturl.dto';
-import { Url } from '../schemas/url.schema';
 
 @Controller('shorturl')
 export class ShortUrlController {
   constructor(private shortUrlService: ShortUrlService) {}
 
   @Get()
+  @Render('index')
   async getUrls() {
     console.log('get all data');
-    return this.shortUrlService.getUrls();
+    const shortUrls = await this.shortUrlService.getUrls();
+    console.log(shortUrls);
+    return { shortUrls };
   }
 
   @Redirect('/')
