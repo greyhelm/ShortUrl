@@ -1,4 +1,4 @@
-import {Controller, Get, Param, Post, Body, Delete, Query, Redirect, Res, Render} from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Delete, Query, Redirect, Res, Render } from '@nestjs/common';
 import { ShortUrlService } from './shorturl.service';
 import { CreateURLDto } from './shorturl.dto';
 
@@ -24,7 +24,7 @@ export class ShortUrlController {
       return res.sendStatus(404);
     }
     //console.log('found original url for '+ url[0].shortUrl +': ' + url[0].originalUrl);
-    return { url: url[0].originalUrl }
+    return { url: url[0].originalUrl };
   }
 
   @Post()

@@ -7,7 +7,7 @@ import { ShortUrlModule } from './shorturl/shorturl.module';
 @Module({
   imports: [
     ShortUrlModule,
-    MongooseModule.forRoot('mongodb://localhost:27017/nest')
+    MongooseModule.forRoot('mongodb://localhost:27017/nest'),
   ],
   controllers: [AppController],
   providers: [AppService],

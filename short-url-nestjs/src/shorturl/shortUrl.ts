@@ -5,7 +5,7 @@ import { ShortUrlService } from './shorturl.service';
 export default class shortenUtils {
   static shorten(val: string) {
     //const alphabet = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-';
-    const urlID = nanoid(6);//.customAlphabet(alphabet, 6);
+    const urlID = nanoid(6); //.customAlphabet(alphabet, 6);
     console.log(urlID);
     return urlID;
   }

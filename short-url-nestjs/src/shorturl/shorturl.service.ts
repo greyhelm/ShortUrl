@@ -30,7 +30,7 @@ export class ShortUrlService {
         resolve(this.urlModel.find({ originalUrl: url }).exec());
       });
     } else {
-      console.log('object fetched: ' + result);
+      // console.log('object fetched: ' + result);
       // increment link usage
       result[0].linkUsage += 1;
       const resultModel = new this.urlModel(result[0]);
