@@ -29,11 +29,20 @@ export class ShortUrlController {
 
   @Post()
   async addUrl(@Body() createUrlDto: CreateURLDto, @Res() res) {
-    //console.log('adding url');
-    const url = await this.shortUrlService.addUrl(createUrlDto);
-    //console.log('addUrl finished');
+    let newUrl;
+    // check if url is already existing
+    const urlExists = await this.shortUrlService.getUrl(
+      createUrlDto.originalUrl,
+    );
+
+    if (urlExists[0] == null) {
+      newUrl = await this.shortUrlService.addUrl(createUrlDto);
+      console.log('addUrl finished');
+    } else {
+      console.log('url already exists');
+    }
     res.redirect('/shorturl');
-    return url;
+    return newUrl;
   }
 
   @Delete()

@@ -1,13 +1,12 @@
 Technical Interview Assignment
 
 - build one page form that takes url and returns shortened url
+	localhost:3000/shorturl
 
 - backend endpoints,
 	one that takes long url and shortens it before returning result
 	second sends request url and response url to db for storage (check if url already exists)
-	third takes request url, checks if it's already shortened, and fetches long link from db, then does redirect
-	
-	set up database to store long and short url. use short url as key
+	third takes request url, checks if it's already shortened, and fetches long link from db
 	
 	schema - {
 		originalUrl
@@ -18,12 +17,22 @@ Technical Interview Assignment
 	}
 	
 - 
-	
+
+geo location using geoip-lite
+get IP from request (req.ip or req.connection.remoteAddress)
+let location = geoip.lookup(ip);
+
+store useful info (town, country etc) with db schema
 	
 * git ssh setup
 
 eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_ed25519
+
+Docker compose
+docker-compose.yaml
+docker compose up / down
+then npm run start
 
 MongoDB
 

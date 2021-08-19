@@ -18,18 +18,24 @@ export class ShortUrlService {
   }
 
   // fetch long url with short url from database
+  // if url already exists, then return data for it
   async getUrl(url): Promise<Url[]> {
     console.log('fetch shortUrl for: ' + url);
-    const result = await new Promise((resolve) => {
+    let result = await new Promise((resolve) => {
       resolve(this.urlModel.find({ shortUrl: url }).exec());
     });
 
-    console.log('object fetched: ' + result);
-
-    // increment link usage
-    result[0].linkUsage += 1;
-    const resultModel = new this.urlModel(result[0]);
-    await resultModel.save();
+    if (result[0] == null) {
+      result = await new Promise((resolve) => {
+        resolve(this.urlModel.find({ originalUrl: url }).exec());
+      });
+    } else {
+      console.log('object fetched: ' + result);
+      // increment link usage
+      result[0].linkUsage += 1;
+      const resultModel = new this.urlModel(result[0]);
+      await resultModel.save();
+    }
 
     return result as Url[];
   }
