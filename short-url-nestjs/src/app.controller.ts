@@ -8,7 +8,7 @@ export class AppController {
   @Get()
   @Redirect('/shorturl')
   getHello() {
-    //const message = this.appService.getHello();
-    return {};
+    const message = this.appService.getHello();
+    return message;
   }
 }
