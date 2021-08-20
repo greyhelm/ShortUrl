@@ -1,43 +1,73 @@
-Technical Interview Assignment
+***Useful commands***
+
+* git ssh setup (ssh not working with main, just use master)
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519
+
+*Docker compose
+docker-compose.yaml
+docker compose up / down
+then npm run start:dev
+
+*MongoDB
+to run locally, cd C:\Program Files\MongoDB\Server\5.0\bin
+mongod.exe
+then run npm run start:dev in nest project
+
+***Technical Interview Assignment***
 
 - build one page form that takes url and returns shortened url
-	localhost:3000/shorturl
+	eg localhost:3000/shorturl - show 'homepage'
+	eg localhost:3000/shorturl/JYHsds - redirect
 
-- backend endpoints,
-	one that takes long url and shortens it before returning result
-	second sends request url and response url to db for storage (check if url already exists)
-	third takes request url, checks if it's already shortened, and fetches long link from db
+- backend endpoints ( postman testing )
+	* takes long url and shortens it before returning result
+	* sends request url and response url to db for storage (check if url already exists)
+	* takes request url, checks if it's already shortened, and fetches long link from db
+	* remove url from db
 	
 	schema - {
 		originalUrl
 		shortUrl
 		linkUsage (clicks)
 		timestamp
-		ip location of request?
+		//ip location of request?
 	}
 	
 - 
 
-geo location using geoip-lite
+***Additional Implementations***
+
+* linkUsage
+
+count the number of time redirect happens for specific url
+
+* geo location
+
+using geoip-lite
 get IP from request (req.ip or req.connection.remoteAddress)
 let location = geoip.lookup(ip);
+need maxmind account
 
-store useful info (town, country etc) with db schema
+store useful info (town, country etc), time of click etc
+can then display on a seperate statistics page
+
+* custom alphabet to use for generating links
+A field where user enters a string to be used as the alphabet when creating new links
+Allows customers to control exactly what chars the shortened url will be created with
+
+
+* custom domain path for short urls
+Allow the user to set the domain for use in the short link
+(would have to register said domain)
+
+Would allow people or companies to create links tailored specifically to them
+
+
+
+
 	
-* git ssh setup
 
-eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/id_ed25519
-
-Docker compose
-docker-compose.yaml
-docker compose up / down
-then npm run start
-
-MongoDB
-
-run locally, ../mongod.exe
-then run npm run start:dev in nest project
 
 
 
